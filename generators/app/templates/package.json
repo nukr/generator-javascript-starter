@@ -1,0 +1,23 @@
+{
+  "name": "<%= project_name %>",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava test"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "author": "nukr",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.15.1",
+    "babel-preset-es2015-node6": "^0.2.0",
+    "babel-preset-stage-0": "^6.5.0"
+  }
+}
+
