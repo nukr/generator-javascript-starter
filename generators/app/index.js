@@ -15,6 +15,11 @@ module.exports = yeoman.Base.extend({
       name: 'project_name',
       message: 'What is your project name?',
       default: this.appname
+    }, {
+      type: 'confirm',
+      name: 'flowtype',
+      message: 'Would you like to enable flowtype support',
+      default: false
     }];
 
     return this.prompt(prompts).then(function (props) {
@@ -34,18 +39,38 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('package.json'),
       { project_name: this.props.project_name }
     );
-    this.fs.copy(
-      this.templatePath('.babelrc'),
-      this.destinationPath('.babelrc')
-    );
+    if (this.props.flow) {
+      this.fs.copy(
+        this.templatePath('babelrc/flowtype'),
+        this.destinationPath('.babelrc')
+      );
+    } else {
+      this.fs.copy(
+        this.templatePath('babelrc/normal'),
+        this.destinationPath('.babelrc')
+      );
+    }
+    if (this.props.flow) {
+      this.fs.copy(
+        this.templatePath('.flowconfig'),
+        this.destinationPath('.flowconfig')
+      )
+    }
     this.fs.copy(
       this.templatePath('.gitignore'),
       this.destinationPath('.gitignore')
     );
-    this.fs.copy(
-      this.templatePath('.eslintrc'),
-      this.destinationPath('.eslintrc')
-    );
+    if (this.props.flowtype) {
+      this.fs.copy(
+        this.templatePath('eslintrc/flowtype'),
+        this.destinationPath('.eslintrc')
+      );
+    } else {
+      this.fs.copy(
+        this.templatePath('eslintrc/normal'),
+        this.destinationPath('.eslintrc')
+      );
+    }
     this.fs.copy(
       this.templatePath('src/index.js'),
       this.destinationPath('src/index.js')
